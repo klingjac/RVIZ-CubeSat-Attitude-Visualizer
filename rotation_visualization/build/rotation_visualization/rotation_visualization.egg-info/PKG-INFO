@@ -1,0 +1,12 @@
+Metadata-Version: 2.1
+Name: rotation_visualization
+Version: 0.0.0
+Summary: Example Python package for ROS 2
+Maintainer: Jacob Klingler
+Maintainer-email: your.email@example.com
+License: Apache License 2.0
+Requires-Dist: setuptools
+Requires-Dist: rclpy
+Requires-Dist: geometry_msgs
+Requires-Dist: tf2_ros
+Requires-Dist: tf2_geometry_msgs

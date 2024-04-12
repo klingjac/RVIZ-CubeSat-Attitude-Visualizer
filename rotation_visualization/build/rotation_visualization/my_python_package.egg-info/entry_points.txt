@@ -1,0 +1,2 @@
+[console_scripts]
+my_node = rotation_visualization.visualization_node:main

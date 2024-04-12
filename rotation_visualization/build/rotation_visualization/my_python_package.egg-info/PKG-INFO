@@ -1,0 +1,8 @@
+Metadata-Version: 2.1
+Name: my_python_package
+Version: 0.0.0
+Summary: Example Python package for ROS 2
+Maintainer: Your Name
+Maintainer-email: your.email@example.com
+License: Apache License 2.0
+Requires-Dist: setuptools

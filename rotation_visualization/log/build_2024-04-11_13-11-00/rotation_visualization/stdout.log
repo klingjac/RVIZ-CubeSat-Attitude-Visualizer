@@ -1,0 +1,6 @@
+running egg_info
+writing build/rotation_visualization/my_python_package.egg-info/PKG-INFO
+writing dependency_links to build/rotation_visualization/my_python_package.egg-info/dependency_links.txt
+writing entry points to build/rotation_visualization/my_python_package.egg-info/entry_points.txt
+writing requirements to build/rotation_visualization/my_python_package.egg-info/requires.txt
+writing top-level names to build/rotation_visualization/my_python_package.egg-info/top_level.txt
