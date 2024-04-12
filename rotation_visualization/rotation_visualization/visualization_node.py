@@ -8,6 +8,8 @@ import csv
 import os
 import math
 from visualization_msgs.msg import Marker
+from scipy.spatial.transform import Rotation as R
+
 
 
 class CSVReaderNode(Node):
@@ -18,9 +20,9 @@ class CSVReaderNode(Node):
         # TF Broadcaster
         self.br = tf2_ros.TransformBroadcaster(self)
         # Timer setup to call timer_callback every second
-        self.timer = self.create_timer(1.0/37, self.timer_callback)
+        self.timer = self.create_timer(1.0/2, self.timer_callback)
         # CSV file path setup and read data
-        self.csv_file_path = os.path.expanduser('~/AERO740/rotation_visualization_ws/rotation_visualization/data/ADS.csv')
+        self.csv_file_path = os.path.expanduser('~/AERO740/rotation_visualization_ws/rotation_visualization/data/ADS_3.csv')
         self.csv_data = self.read_csv(self.csv_file_path)
         self.data_index = 0
         self.marker_pub = self.create_publisher(Marker, 'cubesat_marker', 10)
@@ -45,16 +47,23 @@ class CSVReaderNode(Node):
 
         row = self.csv_data[self.data_index]
         yaw, pitch, roll = float(row[0]), float(row[1]), float(row[2])
-        yaw = 0.0
-        pitch = 0.0
+        q = [float(row[4]), float(row[5]), float(row[6]), float(row[3])]
+        # yaw = 0.0
+        # pitch = 0.0
+        # roll = -50.0
 
         roll_radians = math.radians(roll)
         pitch_radians = math.radians(pitch)
         yaw_radians = math.radians(yaw)
 
-        q = quaternion_from_euler(roll_radians, pitch_radians, yaw_radians, 'sxyz')
+        #q = quaternion_from_euler(roll_radians, pitch_radians, yaw_radians, 'rxyz')
+        #rotation = R.from_euler('zyx', [yaw, pitch, roll], degrees=True)
+
+        # Convert to quaternion
+        #q = rotation.as_quat()
 
         quaternion_msg = Quaternion()
+
         quaternion_msg.x, quaternion_msg.y, quaternion_msg.z, quaternion_msg.w = q
         self.publisher.publish(quaternion_msg)
         self.data_index += 1
@@ -82,8 +91,8 @@ class CSVReaderNode(Node):
         marker.type = marker.CUBE
         marker.action = marker.ADD
         marker.scale.x = 1.0  # Size of the marker [m]
-        marker.scale.y = 3.0
-        marker.scale.z = 1.0
+        marker.scale.y = 1.0
+        marker.scale.z = 3.0
         marker.color.a = 1.0  # Alpha must be non-zero
         marker.color.r = 1.0  # Red color
         marker.color.g = 0.0
