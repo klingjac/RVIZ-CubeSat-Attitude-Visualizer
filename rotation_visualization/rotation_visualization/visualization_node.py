@@ -67,9 +67,9 @@ class CSVReaderNode(Node):
         mesh.pose.position.x = 0.0
         mesh.pose.position.y = 0.0
         mesh.pose.position.z = 0.0
-        mesh.scale.x = 1.0/10  # Adjust scale as needed
-        mesh.scale.y = 1.0/10
-        mesh.scale.z = 1.0/10
+        mesh.scale.x = 1.0/100  # Adjust scale as needed
+        mesh.scale.y = 1.0/100
+        mesh.scale.z = 1.0/100
         mesh.color.a = 1.0  # Alpha must be non-zero
         mesh.color.r = 1.0  # Red color
         mesh.color.g = 0.0
