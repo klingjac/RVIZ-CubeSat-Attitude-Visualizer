@@ -7,6 +7,7 @@ import tf2_ros
 import csv
 import os
 import math
+import time
 from visualization_msgs.msg import Marker
 from scipy.spatial.transform import Rotation as R
 
@@ -20,7 +21,7 @@ class CSVReaderNode(Node):
         # TF Broadcaster
         self.br = tf2_ros.TransformBroadcaster(self)
         # Timer setup to call timer_callback every second
-        self.timer = self.create_timer(1.0/2, self.timer_callback)
+        self.timer = self.create_timer(1.0/8, self.timer_callback)
         # CSV file path setup and read data
         self.csv_file_path = os.path.expanduser('~/AERO740/rotation_visualization_ws/rotation_visualization/data/ADS_3.csv')
         self.csv_data = self.read_csv(self.csv_file_path)
@@ -109,6 +110,7 @@ class CSVReaderNode(Node):
 
 
 def main(args=None):
+    time.sleep(10)
     rclpy.init(args=args)
     node = CSVReaderNode()
     rclpy.spin(node)
