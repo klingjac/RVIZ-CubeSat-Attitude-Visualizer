@@ -1,7 +1,6 @@
 import rclpy
 from rclpy.node import Node
 from geometry_msgs.msg import Quaternion
-from tf_transformations import euler_from_quaternion, quaternion_from_euler
 from geometry_msgs.msg import TransformStamped
 import tf2_ros
 import csv
@@ -11,26 +10,18 @@ import time
 from visualization_msgs.msg import Marker
 from scipy.spatial.transform import Rotation as R
 
-
-
 class CSVReaderNode(Node):
     def __init__(self):
         super().__init__('csv_reader_node')
-        # Publishers
         self.publisher = self.create_publisher(Quaternion, 'orientation', 10)
-        # TF Broadcaster
         self.br = tf2_ros.TransformBroadcaster(self)
-        # Timer setup to call timer_callback every second
         self.timer = self.create_timer(1.0/8, self.timer_callback)
-        # CSV file path setup and read data
         self.csv_file_path = os.path.expanduser('~/AERO740/rotation_visualization_ws/rotation_visualization/data/ADS_3.csv')
         self.csv_data = self.read_csv(self.csv_file_path)
         self.data_index = 0
-        self.marker_pub = self.create_publisher(Marker, 'cubesat_marker', 10)
-
+        self.model_pub = self.create_publisher(Marker, 'virtual_sat_model', 10)
 
     def read_csv(self, file_path):
-        """Read CSV file and return list of rows."""
         try:
             with open(file_path, newline='') as csvfile:
                 data_reader = csv.reader(csvfile, delimiter=',')
@@ -41,7 +32,6 @@ class CSVReaderNode(Node):
             return []
 
     def timer_callback(self):
-        """Callback function that runs at regular timer intervals."""
         if self.data_index >= len(self.csv_data):
             self.get_logger().info('End of CSV data reached.')
             return
@@ -49,65 +39,43 @@ class CSVReaderNode(Node):
         row = self.csv_data[self.data_index]
         yaw, pitch, roll = float(row[0]), float(row[1]), float(row[2])
         q = [float(row[4]), float(row[5]), float(row[6]), float(row[3])]
-        # yaw = 0.0
-        # pitch = 0.0
-        # roll = -50.0
-
-        roll_radians = math.radians(roll)
-        pitch_radians = math.radians(pitch)
-        yaw_radians = math.radians(yaw)
-
-        #q = quaternion_from_euler(roll_radians, pitch_radians, yaw_radians, 'rxyz')
-        #rotation = R.from_euler('zyx', [yaw, pitch, roll], degrees=True)
-
-        # Convert to quaternion
-        #q = rotation.as_quat()
 
         quaternion_msg = Quaternion()
-
         quaternion_msg.x, quaternion_msg.y, quaternion_msg.z, quaternion_msg.w = q
         self.publisher.publish(quaternion_msg)
         self.data_index += 1
-        self.get_logger().info(f'Publishing quaternion: {quaternion_msg}')
-        self.get_logger().info(f'Roll: {roll}, Pitch {pitch}, Yaw {yaw}')
 
-        # Broadcast the TF
         t = TransformStamped()
         t.header.stamp = self.get_clock().now().to_msg()
         t.header.frame_id = 'world'
-        t.child_frame_id = 'cubesat'
-        t.transform.translation.x = 0.0  # Adjust if your model has a position offset
+        t.child_frame_id = 'virtual_sat'
+        t.transform.translation.x = 0.0
         t.transform.translation.y = 0.0
         t.transform.translation.z = 0.0
         t.transform.rotation = quaternion_msg
 
         self.br.sendTransform(t)
-        self.publish_marker(quaternion_msg=quaternion_msg)
+        self.publish_model(quaternion_msg)
 
-    def publish_marker(self, quaternion_msg):
-        marker = Marker()
-        marker.header.frame_id = "cubesat"  # Use the child frame ID
-        marker.header.stamp = self.get_clock().now().to_msg()
-        
-        marker.type = marker.CUBE
-        marker.action = marker.ADD
-        marker.scale.x = 1.0  # Size of the marker [m]
-        marker.scale.y = 1.0
-        marker.scale.z = 3.0
-        marker.color.a = 1.0  # Alpha must be non-zero
-        marker.color.r = 1.0  # Red color
-        marker.color.g = 0.0
-        marker.color.b = 0.0
-        marker.pose.orientation.w = quaternion_msg.w  # Neutral orientation
-        marker.pose.orientation.x = quaternion_msg.x  # Position at the origin of the frame
-        marker.pose.orientation.y = quaternion_msg.y
-        marker.pose.orientation.z = quaternion_msg.z
-        marker.pose.position.x = 0.0  # Optional: Adjust if the marker has a specific position
-        marker.pose.position.y = 0.0
-        marker.pose.position.z = 0.0
+    def publish_model(self, quaternion_msg):
+        mesh = Marker()
+        mesh.header.frame_id = "virtual_sat"
+        mesh.header.stamp = self.get_clock().now().to_msg()
+        mesh.type = mesh.MESH_RESOURCE
+        mesh.mesh_resource = "package://rotation_visualization/models/VirtualSatv6.stl"
+        mesh.pose.orientation = quaternion_msg
+        mesh.pose.position.x = 0.0
+        mesh.pose.position.y = 0.0
+        mesh.pose.position.z = 0.0
+        mesh.scale.x = 1.0/10  # Adjust scale as needed
+        mesh.scale.y = 1.0/10
+        mesh.scale.z = 1.0/10
+        mesh.color.a = 1.0  # Alpha must be non-zero
+        mesh.color.r = 1.0  # Red color
+        mesh.color.g = 0.0
+        mesh.color.b = 0.0
 
-        self.marker_pub.publish(marker)
-
+        self.model_pub.publish(mesh)
 
 def main(args=None):
     time.sleep(10)
@@ -118,5 +86,3 @@ def main(args=None):
 
 if __name__ == '__main__':
     main()
-
-
