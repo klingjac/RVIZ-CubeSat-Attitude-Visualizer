@@ -1,0 +1,31 @@
+running egg_info
+writing ../build/rotation_visualization/rotation_visualization.egg-info/PKG-INFO
+writing dependency_links to ../build/rotation_visualization/rotation_visualization.egg-info/dependency_links.txt
+writing entry points to ../build/rotation_visualization/rotation_visualization.egg-info/entry_points.txt
+writing requirements to ../build/rotation_visualization/rotation_visualization.egg-info/requires.txt
+writing top-level names to ../build/rotation_visualization/rotation_visualization.egg-info/top_level.txt
+reading manifest file '../build/rotation_visualization/rotation_visualization.egg-info/SOURCES.txt'
+writing manifest file '../build/rotation_visualization/rotation_visualization.egg-info/SOURCES.txt'
+running build
+running build_py
+copying rotation_visualization/sun_vect.py -> /home/klingjac/AERO740/rotation_visualization_ws/build/rotation_visualization/build/lib/rotation_visualization
+copying rotation_visualization/__init__.py -> /home/klingjac/AERO740/rotation_visualization_ws/build/rotation_visualization/build/lib/rotation_visualization
+copying rotation_visualization/eig_helper.py -> /home/klingjac/AERO740/rotation_visualization_ws/build/rotation_visualization/build/lib/rotation_visualization
+copying rotation_visualization/visualization_nodeo.py -> /home/klingjac/AERO740/rotation_visualization_ws/build/rotation_visualization/build/lib/rotation_visualization
+copying rotation_visualization/QUEST.py -> /home/klingjac/AERO740/rotation_visualization_ws/build/rotation_visualization/build/lib/rotation_visualization
+copying rotation_visualization/Kalman.py -> /home/klingjac/AERO740/rotation_visualization_ws/build/rotation_visualization/build/lib/rotation_visualization
+copying rotation_visualization/visualization_node.py -> /home/klingjac/AERO740/rotation_visualization_ws/build/rotation_visualization/build/lib/rotation_visualization
+running install
+running install_lib
+copying /home/klingjac/AERO740/rotation_visualization_ws/build/rotation_visualization/build/lib/rotation_visualization/Kalman.py -> /home/klingjac/AERO740/rotation_visualization_ws/install/rotation_visualization/lib/python3.10/site-packages/rotation_visualization
+byte-compiling /home/klingjac/AERO740/rotation_visualization_ws/install/rotation_visualization/lib/python3.10/site-packages/rotation_visualization/Kalman.py to Kalman.cpython-310.pyc
+running install_data
+copying resource/rotation_visualization -> /home/klingjac/AERO740/rotation_visualization_ws/install/rotation_visualization/share/ament_index/resource_index/packages
+copying package.xml -> /home/klingjac/AERO740/rotation_visualization_ws/install/rotation_visualization/share/rotation_visualization
+copying models/VirtualSatv6.stl -> /home/klingjac/AERO740/rotation_visualization_ws/install/rotation_visualization/share/rotation_visualization/models
+running install_egg_info
+removing '/home/klingjac/AERO740/rotation_visualization_ws/install/rotation_visualization/lib/python3.10/site-packages/rotation_visualization-0.0.0-py3.10.egg-info' (and everything under it)
+Copying ../build/rotation_visualization/rotation_visualization.egg-info to /home/klingjac/AERO740/rotation_visualization_ws/install/rotation_visualization/lib/python3.10/site-packages/rotation_visualization-0.0.0-py3.10.egg-info
+running install_scripts
+Installing visualization_node script to /home/klingjac/AERO740/rotation_visualization_ws/install/rotation_visualization/lib/rotation_visualization
+writing list of installed files to '/home/klingjac/AERO740/rotation_visualization_ws/build/rotation_visualization/install.log'

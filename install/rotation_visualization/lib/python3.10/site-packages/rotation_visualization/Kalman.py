@@ -5,13 +5,13 @@ class QuaternionKalmanFilter:
 
         
     dt = 1/37 # Time step
-    Q = np.eye(4) * 2  # Process noise covariance (example)
-    R = np.eye(4) * 1 
+    Q = np.eye(4) * 0.01  # Process noise covariance (example)
+    R = np.eye(4) * 0.1
     state = np.array([1, 0, 0, 0], dtype=np.float64)  # Initial quaternion (w, x, y, z)
     P = np.eye(4)  # Initial state covariance
 
     def predict(self, gyro_meas):
-        
+        gyro_meas = np.radians(gyro_meas)
         #Body frame gyro measurements to a quaternion
         omega = np.hstack(([0], gyro_meas))
 
