@@ -10,8 +10,13 @@ setup.py
 ../build/rotation_visualization/rotation_visualization.egg-info/zip-safe
 models/VirtualSatv6.stl
 resource/rotation_visualization
+rotation_visualization/Kalman.py
+rotation_visualization/QUEST.py
 rotation_visualization/__init__.py
+rotation_visualization/eig_helper.py
+rotation_visualization/sun_vect.py
 rotation_visualization/visualization_node.py
+rotation_visualization/visualization_nodeo.py
 test/test_copyright.py
 test/test_flake8.py
 test/test_pep257.py
