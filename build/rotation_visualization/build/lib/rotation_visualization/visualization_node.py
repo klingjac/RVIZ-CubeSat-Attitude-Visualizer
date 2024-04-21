@@ -109,7 +109,7 @@ class CSVReaderNode(Node):
         
 
         quaternion_msg = Quaternion()
-        quaternion_msg.x, quaternion_msg.y, quaternion_msg.z, quaternion_msg.w = dynamic_q.flatten()
+        quaternion_msg.w, quaternion_msg.x, quaternion_msg.y, quaternion_msg.z = dynamic_q.flatten()
         self.publisher.publish(quaternion_msg)
         self.data_index += 1
 
@@ -130,7 +130,7 @@ class CSVReaderNode(Node):
         mesh.header.frame_id = "virtual_sat"
         mesh.header.stamp = self.get_clock().now().to_msg()
         mesh.type = mesh.MESH_RESOURCE
-        mesh.mesh_resource = "package://rotation_visualization/models/VirtualSatv6.stl"
+        mesh.mesh_resource = "package://rotation_visualization/models/VirtualSatv8.stl"
         mesh.pose.orientation = quaternion_msg
         mesh.pose.position.x = 0.0
         mesh.pose.position.y = 0.0

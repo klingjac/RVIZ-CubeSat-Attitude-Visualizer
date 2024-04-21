@@ -9,6 +9,7 @@ setup.py
 ../build/rotation_visualization/rotation_visualization.egg-info/top_level.txt
 ../build/rotation_visualization/rotation_visualization.egg-info/zip-safe
 models/VirtualSatv6.stl
+models/VirtualSatv8.stl
 resource/rotation_visualization
 rotation_visualization/Kalman.py
 rotation_visualization/QUEST.py
