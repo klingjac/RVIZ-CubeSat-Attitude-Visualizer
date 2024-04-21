@@ -1,0 +1,62 @@
+[0.896s] Invoking command in '/home/klingjac/AERO740/rotation_visualization_ws/build/rotation_visualization': PYTHONPATH=/home/klingjac/AERO740/rotation_visualization_ws/build/rotation_visualization/prefix_override:/home/klingjac/AERO740/rotation_visualization_ws/install/rotation_visualization/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated setup.py develop --uninstall --editable --build-directory /home/klingjac/AERO740/rotation_visualization_ws/build/rotation_visualization/build
+[1.216s] running develop
+[1.216s] /home/klingjac/.local/lib/python3.10/site-packages/setuptools/command/develop.py:39: EasyInstallDeprecationWarning: easy_install command is deprecated.
+[1.217s] !!
+[1.217s] 
+[1.217s]         ********************************************************************************
+[1.217s]         Please avoid running ``setup.py`` and ``easy_install``.
+[1.217s]         Instead, use pypa/build, pypa/installer or other
+[1.217s]         standards-based tools.
+[1.217s] 
+[1.217s]         See https://github.com/pypa/setuptools/issues/917 for details.
+[1.217s]         ********************************************************************************
+[1.217s] 
+[1.217s] !!
+[1.217s]   easy_install.initialize_options(self)
+[1.463s] Removing /home/klingjac/AERO740/rotation_visualization_ws/install/rotation_visualization/lib/python3.10/site-packages/rotation_visualization.egg-link (link to .)
+[1.500s] Invoked command in '/home/klingjac/AERO740/rotation_visualization_ws/build/rotation_visualization' returned '0': PYTHONPATH=/home/klingjac/AERO740/rotation_visualization_ws/build/rotation_visualization/prefix_override:/home/klingjac/AERO740/rotation_visualization_ws/install/rotation_visualization/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated setup.py develop --uninstall --editable --build-directory /home/klingjac/AERO740/rotation_visualization_ws/build/rotation_visualization/build
+[1.501s] Invoking command in '/home/klingjac/AERO740/rotation_visualization_ws/rotation_visualization': PYTHONPATH=/home/klingjac/AERO740/rotation_visualization_ws/build/rotation_visualization/prefix_override:/home/klingjac/AERO740/rotation_visualization_ws/install/rotation_visualization/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated setup.py egg_info --egg-base ../build/rotation_visualization build --build-base /home/klingjac/AERO740/rotation_visualization_ws/build/rotation_visualization/build install --record /home/klingjac/AERO740/rotation_visualization_ws/build/rotation_visualization/install.log --single-version-externally-managed install_data --force
+[1.749s] running egg_info
+[1.764s] writing ../build/rotation_visualization/rotation_visualization.egg-info/PKG-INFO
+[1.764s] writing dependency_links to ../build/rotation_visualization/rotation_visualization.egg-info/dependency_links.txt
+[1.765s] writing entry points to ../build/rotation_visualization/rotation_visualization.egg-info/entry_points.txt
+[1.765s] writing requirements to ../build/rotation_visualization/rotation_visualization.egg-info/requires.txt
+[1.765s] writing top-level names to ../build/rotation_visualization/rotation_visualization.egg-info/top_level.txt
+[1.794s] reading manifest file '../build/rotation_visualization/rotation_visualization.egg-info/SOURCES.txt'
+[1.795s] writing manifest file '../build/rotation_visualization/rotation_visualization.egg-info/SOURCES.txt'
+[1.795s] running build
+[1.795s] running build_py
+[1.795s] copying rotation_visualization/sun_vect.py -> /home/klingjac/AERO740/rotation_visualization_ws/build/rotation_visualization/build/lib/rotation_visualization
+[1.796s] copying rotation_visualization/__init__.py -> /home/klingjac/AERO740/rotation_visualization_ws/build/rotation_visualization/build/lib/rotation_visualization
+[1.796s] copying rotation_visualization/eig_helper.py -> /home/klingjac/AERO740/rotation_visualization_ws/build/rotation_visualization/build/lib/rotation_visualization
+[1.796s] copying rotation_visualization/visualization_nodeo.py -> /home/klingjac/AERO740/rotation_visualization_ws/build/rotation_visualization/build/lib/rotation_visualization
+[1.796s] copying rotation_visualization/QUEST.py -> /home/klingjac/AERO740/rotation_visualization_ws/build/rotation_visualization/build/lib/rotation_visualization
+[1.797s] copying rotation_visualization/Kalman.py -> /home/klingjac/AERO740/rotation_visualization_ws/build/rotation_visualization/build/lib/rotation_visualization
+[1.797s] copying rotation_visualization/visualization_node.py -> /home/klingjac/AERO740/rotation_visualization_ws/build/rotation_visualization/build/lib/rotation_visualization
+[1.797s] running install
+[1.802s] running install_lib
+[1.817s] creating /home/klingjac/AERO740/rotation_visualization_ws/install/rotation_visualization/lib/python3.10/site-packages/rotation_visualization
+[1.818s] copying /home/klingjac/AERO740/rotation_visualization_ws/build/rotation_visualization/build/lib/rotation_visualization/sun_vect.py -> /home/klingjac/AERO740/rotation_visualization_ws/install/rotation_visualization/lib/python3.10/site-packages/rotation_visualization
+[1.818s] copying /home/klingjac/AERO740/rotation_visualization_ws/build/rotation_visualization/build/lib/rotation_visualization/__init__.py -> /home/klingjac/AERO740/rotation_visualization_ws/install/rotation_visualization/lib/python3.10/site-packages/rotation_visualization
+[1.818s] copying /home/klingjac/AERO740/rotation_visualization_ws/build/rotation_visualization/build/lib/rotation_visualization/eig_helper.py -> /home/klingjac/AERO740/rotation_visualization_ws/install/rotation_visualization/lib/python3.10/site-packages/rotation_visualization
+[1.818s] copying /home/klingjac/AERO740/rotation_visualization_ws/build/rotation_visualization/build/lib/rotation_visualization/visualization_nodeo.py -> /home/klingjac/AERO740/rotation_visualization_ws/install/rotation_visualization/lib/python3.10/site-packages/rotation_visualization
+[1.818s] copying /home/klingjac/AERO740/rotation_visualization_ws/build/rotation_visualization/build/lib/rotation_visualization/QUEST.py -> /home/klingjac/AERO740/rotation_visualization_ws/install/rotation_visualization/lib/python3.10/site-packages/rotation_visualization
+[1.819s] copying /home/klingjac/AERO740/rotation_visualization_ws/build/rotation_visualization/build/lib/rotation_visualization/Kalman.py -> /home/klingjac/AERO740/rotation_visualization_ws/install/rotation_visualization/lib/python3.10/site-packages/rotation_visualization
+[1.819s] copying /home/klingjac/AERO740/rotation_visualization_ws/build/rotation_visualization/build/lib/rotation_visualization/visualization_node.py -> /home/klingjac/AERO740/rotation_visualization_ws/install/rotation_visualization/lib/python3.10/site-packages/rotation_visualization
+[1.819s] byte-compiling /home/klingjac/AERO740/rotation_visualization_ws/install/rotation_visualization/lib/python3.10/site-packages/rotation_visualization/sun_vect.py to sun_vect.cpython-310.pyc
+[1.819s] byte-compiling /home/klingjac/AERO740/rotation_visualization_ws/install/rotation_visualization/lib/python3.10/site-packages/rotation_visualization/__init__.py to __init__.cpython-310.pyc
+[1.820s] byte-compiling /home/klingjac/AERO740/rotation_visualization_ws/install/rotation_visualization/lib/python3.10/site-packages/rotation_visualization/eig_helper.py to eig_helper.cpython-310.pyc
+[1.821s] byte-compiling /home/klingjac/AERO740/rotation_visualization_ws/install/rotation_visualization/lib/python3.10/site-packages/rotation_visualization/visualization_nodeo.py to visualization_nodeo.cpython-310.pyc
+[1.821s] byte-compiling /home/klingjac/AERO740/rotation_visualization_ws/install/rotation_visualization/lib/python3.10/site-packages/rotation_visualization/QUEST.py to QUEST.cpython-310.pyc
+[1.822s] byte-compiling /home/klingjac/AERO740/rotation_visualization_ws/install/rotation_visualization/lib/python3.10/site-packages/rotation_visualization/Kalman.py to Kalman.cpython-310.pyc
+[1.822s] byte-compiling /home/klingjac/AERO740/rotation_visualization_ws/install/rotation_visualization/lib/python3.10/site-packages/rotation_visualization/visualization_node.py to visualization_node.cpython-310.pyc
+[1.823s] running install_data
+[1.824s] copying resource/rotation_visualization -> /home/klingjac/AERO740/rotation_visualization_ws/install/rotation_visualization/share/ament_index/resource_index/packages
+[1.824s] copying package.xml -> /home/klingjac/AERO740/rotation_visualization_ws/install/rotation_visualization/share/rotation_visualization
+[1.824s] copying models/VirtualSatv6.stl -> /home/klingjac/AERO740/rotation_visualization_ws/install/rotation_visualization/share/rotation_visualization/models
+[1.824s] running install_egg_info
+[1.843s] Copying ../build/rotation_visualization/rotation_visualization.egg-info to /home/klingjac/AERO740/rotation_visualization_ws/install/rotation_visualization/lib/python3.10/site-packages/rotation_visualization-0.0.0-py3.10.egg-info
+[1.843s] running install_scripts
+[1.981s] Installing visualization_node script to /home/klingjac/AERO740/rotation_visualization_ws/install/rotation_visualization/lib/rotation_visualization
+[1.982s] writing list of installed files to '/home/klingjac/AERO740/rotation_visualization_ws/build/rotation_visualization/install.log'
+[2.004s] Invoked command in '/home/klingjac/AERO740/rotation_visualization_ws/rotation_visualization' returned '0': PYTHONPATH=/home/klingjac/AERO740/rotation_visualization_ws/build/rotation_visualization/prefix_override:/home/klingjac/AERO740/rotation_visualization_ws/install/rotation_visualization/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated setup.py egg_info --egg-base ../build/rotation_visualization build --build-base /home/klingjac/AERO740/rotation_visualization_ws/build/rotation_visualization/build install --record /home/klingjac/AERO740/rotation_visualization_ws/build/rotation_visualization/install.log --single-version-externally-managed install_data --force

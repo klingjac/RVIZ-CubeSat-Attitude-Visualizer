@@ -25,6 +25,7 @@ class CSVReaderNode(Node):
         self.csv_data = self.read_csv(self.csv_file_path)
         self.data_index = 0
         self.model_pub = self.create_publisher(Marker, 'virtual_sat_model', 10)
+        # self.marker_pub = self.create_publisher(Marker, 'cubesat_marker', 10)
         self.ekf = QuaternionKalmanFilter()
 
     def read_csv(self, file_path):
@@ -143,6 +144,29 @@ class CSVReaderNode(Node):
         mesh.color.b = 0.0
 
         self.model_pub.publish(mesh)
+
+        # marker = Marker()
+        # marker.header.frame_id = "cubesat"  # Use the child frame ID
+        # marker.header.stamp = self.get_clock().now().to_msg()
+        
+        # marker.type = marker.CUBE
+        # marker.action = marker.ADD
+        # marker.scale.x = 1.0  # Size of the marker [m]
+        # marker.scale.y = 1.0
+        # marker.scale.z = 3.0
+        # marker.color.a = 1.0  # Alpha must be non-zero
+        # marker.color.r = 1.0  # Red color
+        # marker.color.g = 0.0
+        # marker.color.b = 0.0
+        # marker.pose.orientation.w = quaternion_msg.w  # Neutral orientation
+        # marker.pose.orientation.x = quaternion_msg.x  # Position at the origin of the frame
+        # marker.pose.orientation.y = quaternion_msg.y
+        # marker.pose.orientation.z = quaternion_msg.z
+        # marker.pose.position.x = 0.0  # Optional: Adjust if the marker has a specific position
+        # marker.pose.position.y = 0.0
+        # marker.pose.position.z = 0.0
+
+        # self.marker_pub.publish(marker)
 
 def main(args=None):
     time.sleep(1)

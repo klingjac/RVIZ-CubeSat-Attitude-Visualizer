@@ -1,0 +1,31 @@
+running develop
+/home/klingjac/.local/lib/python3.10/site-packages/setuptools/command/develop.py:39: EasyInstallDeprecationWarning: easy_install command is deprecated.
+!!
+
+        ********************************************************************************
+        Please avoid running ``setup.py`` and ``easy_install``.
+        Instead, use pypa/build, pypa/installer or other
+        standards-based tools.
+
+        See https://github.com/pypa/setuptools/issues/917 for details.
+        ********************************************************************************
+
+!!
+  easy_install.initialize_options(self)
+running egg_info
+writing rotation_visualization.egg-info/PKG-INFO
+writing dependency_links to rotation_visualization.egg-info/dependency_links.txt
+writing entry points to rotation_visualization.egg-info/entry_points.txt
+writing requirements to rotation_visualization.egg-info/requires.txt
+writing top-level names to rotation_visualization.egg-info/top_level.txt
+reading manifest file 'rotation_visualization.egg-info/SOURCES.txt'
+writing manifest file 'rotation_visualization.egg-info/SOURCES.txt'
+running build_ext
+Creating /home/klingjac/AERO740/rotation_visualization_ws/install/rotation_visualization/lib/python3.10/site-packages/rotation_visualization.egg-link (link to .)
+Installing visualization_node script to /home/klingjac/AERO740/rotation_visualization_ws/install/rotation_visualization/lib/rotation_visualization
+
+Installed /home/klingjac/AERO740/rotation_visualization_ws/build/rotation_visualization
+running symlink_data
+symbolically linking /home/klingjac/AERO740/rotation_visualization_ws/build/rotation_visualization/resource/rotation_visualization -> /home/klingjac/AERO740/rotation_visualization_ws/install/rotation_visualization/share/ament_index/resource_index/packages
+symbolically linking /home/klingjac/AERO740/rotation_visualization_ws/build/rotation_visualization/package.xml -> /home/klingjac/AERO740/rotation_visualization_ws/install/rotation_visualization/share/rotation_visualization
+symbolically linking /home/klingjac/AERO740/rotation_visualization_ws/build/rotation_visualization/models/VirtualSatv6.stl -> /home/klingjac/AERO740/rotation_visualization_ws/install/rotation_visualization/share/rotation_visualization/models
