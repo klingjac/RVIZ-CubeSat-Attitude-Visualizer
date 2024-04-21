@@ -21,7 +21,7 @@ class CSVReaderNode(Node):
         self.publisher = self.create_publisher(Quaternion, 'orientation', 10)
         self.br = tf2_ros.TransformBroadcaster(self)
         self.timer = self.create_timer(1.0/20, self.timer_callback)
-        self.csv_file_path = os.path.expanduser('~/AERO740/rotation_visualization_ws/rotation_visualization/data/concat_data1.csv')
+        self.csv_file_path = os.path.expanduser('~/AERO740/rotation_visualization_ws/rotation_visualization/data/concat_data2.csv')
         self.csv_data = self.read_csv(self.csv_file_path)
         self.data_index = 0
         self.model_pub = self.create_publisher(Marker, 'virtual_sat_model', 10)
@@ -82,7 +82,7 @@ class CSVReaderNode(Node):
         flat_sun_vect = sun_vect.flatten()
         body_vs = np.vstack((flat_sun_vect, mag_vect))
         ref_vs = np.vstack((sun_ref, mag_ref))
-        weights = np.vstack((10,2))
+        weights = np.vstack((2,2))
         static_q = quest(body_vs, weights, ref_vs)
         
 
@@ -108,7 +108,7 @@ class CSVReaderNode(Node):
         
 
         quaternion_msg = Quaternion()
-        quaternion_msg.x, quaternion_msg.y, quaternion_msg.z, quaternion_msg.w = dynamic_q
+        quaternion_msg.x, quaternion_msg.y, quaternion_msg.z, quaternion_msg.w = static_q.flatten()
         self.publisher.publish(quaternion_msg)
         self.data_index += 1
 

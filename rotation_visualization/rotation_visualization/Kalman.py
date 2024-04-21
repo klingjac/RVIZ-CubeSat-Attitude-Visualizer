@@ -4,9 +4,9 @@ from scipy.linalg import block_diag
 class QuaternionKalmanFilter:
 
         
-    dt = 0.2618577480316162  # Time step
-    Q = np.eye(4) * 10  # Process noise covariance (example)
-    R = np.eye(4) * 2 
+    dt = 1/37 # Time step
+    Q = np.eye(4) * 2  # Process noise covariance (example)
+    R = np.eye(4) * 1 
     state = np.array([1, 0, 0, 0], dtype=np.float64)  # Initial quaternion (w, x, y, z)
     P = np.eye(4)  # Initial state covariance
 
