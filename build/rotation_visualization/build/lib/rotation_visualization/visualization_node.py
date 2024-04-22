@@ -23,8 +23,8 @@ class CSVReaderNode(Node):
         super().__init__('csv_reader_node')
         self.publisher = self.create_publisher(Quaternion, 'orientation', 10)
         self.br = tf2_ros.TransformBroadcaster(self)
-        self.timer = self.create_timer(1.0/37, self.timer_callback)
-        self.csv_file_path = os.path.expanduser('~/AERO740/rotation_visualization_ws/rotation_visualization/data/concat_data2.csv')
+        self.timer = self.create_timer(1.0/100, self.timer_callback)
+        self.csv_file_path = os.path.expanduser('~/AERO740/rotation_visualization_ws/rotation_visualization/data/concat_data1.csv')
         self.csv_data = self.read_csv(self.csv_file_path)
         self.data_index = 0
         self.model_pub = self.create_publisher(Marker, 'virtual_sat_model', 10)
@@ -184,6 +184,13 @@ class CSVReaderNode(Node):
         quaternions = np.array(self.dynamic_quaternions)
         # times = np.array(self.times)
         times = [(t - self.times[0]).total_seconds() for t in self.times]
+        window_size = 10  # Adjust based on your dataset and preferences
+
+        # Calculate moving averages for each component
+        q0_avg = np.convolve(quaternions[:, 0], np.ones(window_size)/window_size, 'valid')
+        q1_avg = np.convolve(quaternions[:, 1], np.ones(window_size)/window_size, 'valid')
+        q2_avg = np.convolve(quaternions[:, 2], np.ones(window_size)/window_size, 'valid')
+        q3_avg = np.convolve(quaternions[:, 3], np.ones(window_size)/window_size, 'valid')
         # times = (times - times[0]) * 1e-9  # Convert to seconds from nanoseconds and zero the time
         
         plt.figure()
@@ -196,6 +203,18 @@ class CSVReaderNode(Node):
         plt.ylabel('Quaternion Components')
         plt.title('Quaternion Components Over Time')
         plt.legend()
+        plt.show()
+
+        plt.figure(figsize=(10, 8))
+        plt.plot(times[window_size-1:], q0_avg, label='q0 (w) avg', linewidth=1)
+        plt.plot(times[window_size-1:], q1_avg, label='q1 (x) avg', linewidth=1)
+        plt.plot(times[window_size-1:], q2_avg, label='q2 (y) avg', linewidth=1)
+        plt.plot(times[window_size-1:], q3_avg, label='q3 (z) avg', linewidth=1)
+        plt.xlabel('Time (s)')
+        plt.ylabel('Moving Average of Quaternion Components')
+        plt.title('Moving Averages of Quaternion Components Over Time')
+        plt.legend()
+        plt.grid(True)
         plt.show()
 
 def main(args=None):
