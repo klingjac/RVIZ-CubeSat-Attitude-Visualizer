@@ -6,6 +6,7 @@ import tf2_ros
 import csv
 import os
 import math
+import sys
 import time
 from visualization_msgs.msg import Marker
 from scipy.spatial.transform import Rotation as R
@@ -14,6 +15,8 @@ import numpy as np
 from .Kalman import QuaternionKalmanFilter
 from .QUEST import quest
 from .sun_vect import compute_vect
+import matplotlib.pyplot as plt
+from datetime import datetime
 
 class CSVReaderNode(Node):
     def __init__(self):
@@ -28,12 +31,17 @@ class CSVReaderNode(Node):
         # self.marker_pub = self.create_publisher(Marker, 'cubesat_marker', 10)
         self.ekf = QuaternionKalmanFilter()
 
+        self.dynamic_quaternions = []
+        self.times = []
+
     def read_csv(self, file_path):
         try:
             with open(file_path, newline='') as csvfile:
                 data_reader = csv.reader(csvfile, delimiter=',')
                 next(data_reader, None)  # Skip header
-                return [row for row in data_reader]
+
+                # return [row for row in data_reader]
+                return [(datetime.strptime(row[0], '%H:%M:%S.%f'), row) for row in data_reader]
         except FileNotFoundError:
             self.get_logger().error(f"File not found: {file_path}")
             return []
@@ -43,7 +51,8 @@ class CSVReaderNode(Node):
             self.get_logger().info('End of CSV data reached.')
             return
 
-        row = self.csv_data[self.data_index]
+        csv_time, row = self.csv_data[self.data_index]
+        self.times.append(csv_time)
         mag_vect = row[17]
         vect = mag_vect.strip('[]')
         vect = vect.split()
@@ -83,7 +92,7 @@ class CSVReaderNode(Node):
         flat_sun_vect = sun_vect.flatten()
         body_vs = np.vstack((flat_sun_vect, mag_vect))
         ref_vs = np.vstack((sun_ref, mag_ref))
-        weights = np.vstack((10,2))
+        weights = np.vstack((5,2))
         static_q = quest(body_vs, weights, ref_vs)
         
 
@@ -110,6 +119,8 @@ class CSVReaderNode(Node):
 
         quaternion_msg = Quaternion()
         quaternion_msg.w, quaternion_msg.x, quaternion_msg.y, quaternion_msg.z = dynamic_q.flatten()
+        self.dynamic_quaternions.append(dynamic_q.flatten()) 
+        
         self.publisher.publish(quaternion_msg)
         self.data_index += 1
 
@@ -168,12 +179,46 @@ class CSVReaderNode(Node):
 
         # self.marker_pub.publish(marker)
 
+    def plot_quaternions(self):
+        # Convert lists to numpy arrays for easier slicing
+        quaternions = np.array(self.dynamic_quaternions)
+        # times = np.array(self.times)
+        times = [(t - self.times[0]).total_seconds() for t in self.times]
+        # times = (times - times[0]) * 1e-9  # Convert to seconds from nanoseconds and zero the time
+        
+        plt.figure()
+        plt.plot(times, quaternions[:, 0], label='q0 (w)')
+        plt.plot(times, quaternions[:, 1], label='q1 (x)')
+        plt.plot(times, quaternions[:, 2], label='q2 (y)')
+        plt.plot(times, quaternions[:, 3], label='q3 (z)')
+        
+        plt.xlabel('Time (s)')
+        plt.ylabel('Quaternion Components')
+        plt.title('Quaternion Components Over Time')
+        plt.legend()
+        plt.show()
+
 def main(args=None):
     time.sleep(1)
     rclpy.init(args=args)
     node = CSVReaderNode()
-    rclpy.spin(node)
-    rclpy.shutdown()
-
+    
+    # The rclpy.spin() will block execution until the node is shutdown
+    # The node will be shutdown after processing all the data or if the user interrupts the process
+    try:
+        rclpy.spin(node)
+    except KeyboardInterrupt:
+        node.get_logger().info('Node stopped cleanly')
+    # except BaseException:
+    #     node.get_logger().info('Exception in CSVReaderNode:', file=sys.stderr)
+    #     raise
+    finally:
+        # Clean shutdown of node
+        node.plot_quaternions()
+        node.destroy_node()
+        # rclpy.shutdown()
+        
+    # After spinning and processing the CSV data, we plot the quaternion data
+        # node.plot_quaternions()
 if __name__ == '__main__':
     main()

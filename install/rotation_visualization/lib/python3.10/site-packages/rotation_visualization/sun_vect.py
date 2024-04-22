@@ -28,7 +28,7 @@ def compute_vect(I1, I2, I3, I21, I22, I23, pannels):
     p3 = pannels[2]
     p4 = pannels[3]
     y = np.vstack((I1,I2,I3,I21,I22,I23,p1,p2,p3,p4))
-    # y[y < 0.1] = 0
+    y[y < 0.15] = 0
     #print(y)
 
     R = 7e-11 * np.identity(10) #Measurement covariance matrix 

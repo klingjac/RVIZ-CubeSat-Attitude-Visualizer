@@ -10,6 +10,7 @@ import time
 from visualization_msgs.msg import Marker
 from scipy.spatial.transform import Rotation as R
 import ast
+from datetime import datetime
 
 class CSVReaderNode(Node):
     def __init__(self):
@@ -17,7 +18,7 @@ class CSVReaderNode(Node):
         self.publisher = self.create_publisher(Quaternion, 'orientation', 10)
         self.br = tf2_ros.TransformBroadcaster(self)
         self.timer = self.create_timer(1.0/37, self.timer_callback)
-        self.csv_file_path = os.path.expanduser('~/AERO740/rotation_visualization_ws/rotation_visualization/data/concat_data2.csv')
+        self.csv_file_path = os.path.expanduser('~/AERO740/rotation_visualization_ws/rotation_visualization/data/concat_data1.csv')
         self.csv_data = self.read_csv(self.csv_file_path)
         self.data_index = 0
         self.model_pub = self.create_publisher(Marker, 'virtual_sat_model', 10)
@@ -70,7 +71,7 @@ class CSVReaderNode(Node):
         mesh.header.frame_id = "virtual_sat"
         mesh.header.stamp = self.get_clock().now().to_msg()
         mesh.type = mesh.MESH_RESOURCE
-        mesh.mesh_resource = "package://rotation_visualization/models/VirtualSatv6.stl"
+        mesh.mesh_resource = "package://rotation_visualization/models/VirtualSatv8.stl"
         mesh.pose.orientation = quaternion_msg
         mesh.pose.position.x = 0.0
         mesh.pose.position.y = 0.0
