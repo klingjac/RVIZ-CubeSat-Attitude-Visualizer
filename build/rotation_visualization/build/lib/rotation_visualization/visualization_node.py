@@ -195,8 +195,11 @@ class CSVReaderNode(Node):
 
         marker2 = Marker()
 
+        marker2.header.frame_id = "virtual_sat" 
+
         marker2.type = marker.SPHERE
         marker2.action = marker.ADD
+
         marker2.scale.x = 1.0  # Size of the marker [m]
         marker2.scale.y = 1.0
         marker2.scale.z = 1.0
