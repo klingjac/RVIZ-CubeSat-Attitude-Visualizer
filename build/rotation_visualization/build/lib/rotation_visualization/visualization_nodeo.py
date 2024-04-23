@@ -47,6 +47,8 @@ class CSVReaderNode(Node):
         q = [float(num) for num in quat_parts]
         #yaw, pitch, roll = float(row[0]), float(row[1]), float(row[2])
         self.get_logger().info(f'Quat: {quat_str}')
+
+        
         
 
         quaternion_msg = Quaternion()

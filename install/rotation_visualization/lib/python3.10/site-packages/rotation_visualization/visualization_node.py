@@ -23,12 +23,12 @@ class CSVReaderNode(Node):
         super().__init__('csv_reader_node')
         self.publisher = self.create_publisher(Quaternion, 'orientation', 10)
         self.br = tf2_ros.TransformBroadcaster(self)
-        self.timer = self.create_timer(1.0/100, self.timer_callback)
-        self.csv_file_path = os.path.expanduser('~/AERO740/rotation_visualization_ws/rotation_visualization/data/concat_data1.csv')
+        self.timer = self.create_timer(1.0/10, self.timer_callback)
+        self.csv_file_path = os.path.expanduser('~/AERO740/rotation_visualization_ws/rotation_visualization/data/concat_data2.csv')
         self.csv_data = self.read_csv(self.csv_file_path)
         self.data_index = 0
         self.model_pub = self.create_publisher(Marker, 'virtual_sat_model', 10)
-        # self.marker_pub = self.create_publisher(Marker, 'cubesat_marker', 10)
+        self.marker_pub = self.create_publisher(Marker, 'sun_marker', 10)
         self.ekf = QuaternionKalmanFilter()
 
         self.dynamic_quaternions = []
@@ -69,6 +69,13 @@ class CSVReaderNode(Node):
         vect = sun_ref.strip('[]')
         vect = vect.split()
         sun_ref = [float(num) for num in vect]
+
+        quat_str = row[24]
+        quat_str_cleaned = quat_str.strip('[]')
+        quat_parts = quat_str_cleaned.split()
+
+        # Convert each part to a float
+        q = [float(num) for num in quat_parts]
 
         t11 = float(row[7])
         t12 = float(row[8])
@@ -119,7 +126,7 @@ class CSVReaderNode(Node):
 
         quaternion_msg = Quaternion()
         quaternion_msg.w, quaternion_msg.x, quaternion_msg.y, quaternion_msg.z = dynamic_q.flatten()
-        self.dynamic_quaternions.append(dynamic_q.flatten()) 
+        self.dynamic_quaternions.append(q) 
         
         self.publisher.publish(quaternion_msg)
         self.data_index += 1
@@ -134,9 +141,9 @@ class CSVReaderNode(Node):
         t.transform.rotation = quaternion_msg
 
         self.br.sendTransform(t)
-        self.publish_model(quaternion_msg)
+        self.publish_model(quaternion_msg, flat_sun_vect)
 
-    def publish_model(self, quaternion_msg):
+    def publish_model(self, quaternion_msg, sunvect):
         mesh = Marker()
         mesh.header.frame_id = "virtual_sat"
         mesh.header.stamp = self.get_clock().now().to_msg()
@@ -156,28 +163,34 @@ class CSVReaderNode(Node):
 
         self.model_pub.publish(mesh)
 
-        # marker = Marker()
-        # marker.header.frame_id = "cubesat"  # Use the child frame ID
-        # marker.header.stamp = self.get_clock().now().to_msg()
+        marker = Marker()
+        marker.header.frame_id = "virtual_sat"  # Use the child frame ID
+        marker.header.stamp = mesh.header.stamp
         
-        # marker.type = marker.CUBE
-        # marker.action = marker.ADD
-        # marker.scale.x = 1.0  # Size of the marker [m]
-        # marker.scale.y = 1.0
-        # marker.scale.z = 3.0
-        # marker.color.a = 1.0  # Alpha must be non-zero
-        # marker.color.r = 1.0  # Red color
-        # marker.color.g = 0.0
-        # marker.color.b = 0.0
-        # marker.pose.orientation.w = quaternion_msg.w  # Neutral orientation
-        # marker.pose.orientation.x = quaternion_msg.x  # Position at the origin of the frame
-        # marker.pose.orientation.y = quaternion_msg.y
-        # marker.pose.orientation.z = quaternion_msg.z
-        # marker.pose.position.x = 0.0  # Optional: Adjust if the marker has a specific position
-        # marker.pose.position.y = 0.0
-        # marker.pose.position.z = 0.0
+        marker.type = marker.SPHERE
+        marker.action = marker.ADD
+        marker.scale.x = 1.0  # Size of the marker [m]
+        marker.scale.y = 1.0
+        marker.scale.z = 1.0
+        marker.color.a = 1.0  # Alpha must be non-zero
+        marker.color.r = 1.0  # Red color
+        marker.color.g = 0.0
+        marker.color.b = 0.0
+        marker.pose.orientation.w = quaternion_msg.w  # Neutral orientation
+        marker.pose.orientation.x = quaternion_msg.x  # Position at the origin of the frame
+        marker.pose.orientation.y = quaternion_msg.y
+        marker.pose.orientation.z = quaternion_msg.z
 
-        # self.marker_pub.publish(marker)
+        q = [quaternion_msg.w, quaternion_msg.x, quaternion_msg.y, quaternion_msg.z]
+        
+        rotation = R.from_quat(q)
+        rotated_sun_vect = rotation.apply(sunvect) * 3
+
+        marker.pose.position.x = float(rotated_sun_vect[0])  # Optional: Adjust if the marker has a specific position
+        marker.pose.position.y = float(rotated_sun_vect[1])
+        marker.pose.position.z = float(rotated_sun_vect[2])
+
+        self.marker_pub.publish(marker)
 
     def plot_quaternions(self):
         # Convert lists to numpy arrays for easier slicing
