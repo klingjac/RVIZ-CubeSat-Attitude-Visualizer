@@ -29,6 +29,7 @@ class CSVReaderNode(Node):
         self.data_index = 0
         self.model_pub = self.create_publisher(Marker, 'virtual_sat_model', 10)
         self.marker_pub = self.create_publisher(Marker, 'sun_marker', 10)
+        self.ref_marker_pub = self.create_publisher(Marker, 'sun_ref_marker', 10)
         self.ekf = QuaternionKalmanFilter()
 
         self.dynamic_quaternions = []
@@ -141,9 +142,9 @@ class CSVReaderNode(Node):
         t.transform.rotation = quaternion_msg
 
         self.br.sendTransform(t)
-        self.publish_model(quaternion_msg, flat_sun_vect)
+        self.publish_model(quaternion_msg, flat_sun_vect, sun_ref)
 
-    def publish_model(self, quaternion_msg, sunvect):
+    def publish_model(self, quaternion_msg, sunvect, sunref):
         mesh = Marker()
         mesh.header.frame_id = "virtual_sat"
         mesh.header.stamp = self.get_clock().now().to_msg()
@@ -191,6 +192,28 @@ class CSVReaderNode(Node):
         marker.pose.position.z = float(rotated_sun_vect[2])
 
         self.marker_pub.publish(marker)
+
+        marker2 = Marker()
+
+        marker2.type = marker.SPHERE
+        marker2.action = marker.ADD
+        marker2.scale.x = 1.0  # Size of the marker [m]
+        marker2.scale.y = 1.0
+        marker2.scale.z = 1.0
+        marker2.color.a = 1.0  # Alpha must be non-zero
+        marker2.color.r = 0.0  # Red color
+        marker2.color.g = 0.0
+        marker2.color.b = 1.0
+        marker2.pose.orientation.w = quaternion_msg.w  # Neutral orientation
+        marker2.pose.orientation.x = quaternion_msg.x  # Position at the origin of the frame
+        marker2.pose.orientation.y = quaternion_msg.y
+        marker2.pose.orientation.z = quaternion_msg.z
+
+        marker2.pose.position.x = float(sunref[0]) * 3  # Optional: Adjust if the marker has a specific position
+        marker2.pose.position.y = float(sunref[1]) * 3
+        marker2.pose.position.z = float(sunref[2]) * 3
+
+        self.ref_marker_pub.publish(marker2)
 
     def plot_quaternions(self):
         # Convert lists to numpy arrays for easier slicing
