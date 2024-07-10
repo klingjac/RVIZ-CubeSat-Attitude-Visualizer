@@ -24,7 +24,7 @@ class CSVReaderNode(Node):
         self.publisher = self.create_publisher(Quaternion, 'orientation', 10)
         self.br = tf2_ros.TransformBroadcaster(self)
         self.timer = self.create_timer(1.0/10, self.timer_callback)
-        self.csv_file_path = os.path.expanduser('~/AERO740/rotation_visualization_ws/rotation_visualization/data/concat_data2.csv')
+        self.csv_file_path = os.path.expanduser('~/AERO740/rotation_visualization_ws/rotation_visualization/data/combined_ADS.csv')
         self.csv_data = self.read_csv(self.csv_file_path)
         self.data_index = 0
         self.model_pub = self.create_publisher(Marker, 'virtual_sat_model', 10)

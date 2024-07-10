@@ -5,7 +5,7 @@ class QuaternionKalmanFilter:
 
         
     dt = 1/37 # Time step
-    Q = np.eye(4) * 0.8  # Process noise covariance (example)
+    Q = np.eye(4) * 0.01  # Process noise covariance (example)
     R = np.eye(4) * 0.1
     state = np.array([1, 0, 0, 0], dtype=np.float64)  # Initial quaternion (w, x, y, z)
     P = np.eye(4)  # Initial state covariance

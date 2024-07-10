@@ -11,6 +11,7 @@ setup.py
 models/VirtualSatv6.stl
 models/VirtualSatv8.stl
 resource/rotation_visualization
+rotation_visualization/EKFQb.py
 rotation_visualization/Kalman.py
 rotation_visualization/QUEST.py
 rotation_visualization/__init__.py

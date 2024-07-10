@@ -21,7 +21,7 @@ setup(
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
-            'visualization_node = rotation_visualization.visualization_node:main'
+            'visualization_node = rotation_visualization.visualization_nodeo:main'
         ],
     },
 )
